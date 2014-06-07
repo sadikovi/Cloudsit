@@ -23,6 +23,16 @@
 		A311BB9E1942B83800471153 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB791942B83800471153 /* Foundation.framework */; };
 		A311BBA61942B83800471153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A311BBA41942B83800471153 /* InfoPlist.strings */; };
 		A311BBA91942B83800471153 /* CloudsitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBA81942B83800471153 /* CloudsitTests.m */; };
+		A311BBB41942B94700471153 /* RequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBB31942B94700471153 /* RequestManager.m */; };
+		A311BBB91942B9BC00471153 /* CloudsitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBB81942B9BC00471153 /* CloudsitManager.m */; };
+		A311BBC81942CB3600471153 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBBD1942CB3600471153 /* NSObject+SBJSON.m */; };
+		A311BBC91942CB3600471153 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBBF1942CB3600471153 /* NSString+SBJSON.m */; };
+		A311BBCA1942CB3600471153 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC11942CB3600471153 /* SBJSON.m */; };
+		A311BBCB1942CB3600471153 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC31942CB3600471153 /* SBJsonBase.m */; };
+		A311BBCC1942CB3600471153 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC51942CB3600471153 /* SBJsonParser.m */; };
+		A311BBCD1942CB3600471153 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC71942CB3600471153 /* SBJsonWriter.m */; };
+		A3AC8402194331A10096F52B /* CloudsitWeatherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A3AC8401194331A10096F52B /* CloudsitWeatherResult.m */; };
+		A3AC8405194338290096F52B /* CloudsitCurrentConditionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A3AC8404194338290096F52B /* CloudsitCurrentConditionResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +68,27 @@
 		A311BBA51942B83800471153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A311BBA71942B83800471153 /* CloudsitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudsitTests.h; sourceTree = "<group>"; };
 		A311BBA81942B83800471153 /* CloudsitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudsitTests.m; sourceTree = "<group>"; };
+		A311BBB21942B94700471153 /* RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestManager.h; sourceTree = "<group>"; };
+		A311BBB31942B94700471153 /* RequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestManager.m; sourceTree = "<group>"; };
+		A311BBB71942B9BC00471153 /* CloudsitManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsitManager.h; sourceTree = "<group>"; };
+		A311BBB81942B9BC00471153 /* CloudsitManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudsitManager.m; sourceTree = "<group>"; };
+		A311BBBB1942CB3600471153 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		A311BBBC1942CB3600471153 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		A311BBBD1942CB3600471153 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		A311BBBE1942CB3600471153 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		A311BBBF1942CB3600471153 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		A311BBC01942CB3600471153 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		A311BBC11942CB3600471153 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		A311BBC21942CB3600471153 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		A311BBC31942CB3600471153 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		A311BBC41942CB3600471153 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		A311BBC51942CB3600471153 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		A311BBC61942CB3600471153 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		A311BBC71942CB3600471153 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		A3AC8400194331A10096F52B /* CloudsitWeatherResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsitWeatherResult.h; sourceTree = "<group>"; };
+		A3AC8401194331A10096F52B /* CloudsitWeatherResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudsitWeatherResult.m; sourceTree = "<group>"; };
+		A3AC8403194338290096F52B /* CloudsitCurrentConditionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsitCurrentConditionResult.h; sourceTree = "<group>"; };
+		A3AC8404194338290096F52B /* CloudsitCurrentConditionResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudsitCurrentConditionResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +148,9 @@
 		A311BB7D1942B83800471153 /* Cloudsit */ = {
 			isa = PBXGroup;
 			children = (
-				A311BB861942B83800471153 /* CloudsitAppDelegate.h */,
-				A311BB871942B83800471153 /* CloudsitAppDelegate.m */,
+				A311BBB51942B95100471153 /* Model */,
+				A311BBB61942B95A00471153 /* View Controller */,
 				A311BB8F1942B83800471153 /* MainStoryboard.storyboard */,
-				A311BB921942B83800471153 /* CloudsitViewController.h */,
-				A311BB931942B83800471153 /* CloudsitViewController.m */,
 				A311BB7E1942B83800471153 /* Supporting Files */,
 			);
 			path = Cloudsit;
@@ -130,6 +159,8 @@
 		A311BB7E1942B83800471153 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A311BB861942B83800471153 /* CloudsitAppDelegate.h */,
+				A311BB871942B83800471153 /* CloudsitAppDelegate.m */,
 				A311BB7F1942B83800471153 /* Cloudsit-Info.plist */,
 				A311BB801942B83800471153 /* InfoPlist.strings */,
 				A311BB831942B83800471153 /* main.m */,
@@ -158,6 +189,51 @@
 				A311BBA41942B83800471153 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A311BBB51942B95100471153 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A311BBBA1942CB3600471153 /* SBJSON */,
+				A311BBB21942B94700471153 /* RequestManager.h */,
+				A311BBB31942B94700471153 /* RequestManager.m */,
+				A311BBB71942B9BC00471153 /* CloudsitManager.h */,
+				A311BBB81942B9BC00471153 /* CloudsitManager.m */,
+				A3AC8403194338290096F52B /* CloudsitCurrentConditionResult.h */,
+				A3AC8404194338290096F52B /* CloudsitCurrentConditionResult.m */,
+				A3AC8400194331A10096F52B /* CloudsitWeatherResult.h */,
+				A3AC8401194331A10096F52B /* CloudsitWeatherResult.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A311BBB61942B95A00471153 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A311BB921942B83800471153 /* CloudsitViewController.h */,
+				A311BB931942B83800471153 /* CloudsitViewController.m */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		A311BBBA1942CB3600471153 /* SBJSON */ = {
+			isa = PBXGroup;
+			children = (
+				A311BBBB1942CB3600471153 /* JSON.h */,
+				A311BBBC1942CB3600471153 /* NSObject+SBJSON.h */,
+				A311BBBD1942CB3600471153 /* NSObject+SBJSON.m */,
+				A311BBBE1942CB3600471153 /* NSString+SBJSON.h */,
+				A311BBBF1942CB3600471153 /* NSString+SBJSON.m */,
+				A311BBC01942CB3600471153 /* SBJSON.h */,
+				A311BBC11942CB3600471153 /* SBJSON.m */,
+				A311BBC21942CB3600471153 /* SBJsonBase.h */,
+				A311BBC31942CB3600471153 /* SBJsonBase.m */,
+				A311BBC41942CB3600471153 /* SBJsonParser.h */,
+				A311BBC51942CB3600471153 /* SBJsonParser.m */,
+				A311BBC61942CB3600471153 /* SBJsonWriter.h */,
+				A311BBC71942CB3600471153 /* SBJsonWriter.m */,
+			);
+			path = SBJSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +350,16 @@
 				A311BB841942B83800471153 /* main.m in Sources */,
 				A311BB881942B83800471153 /* CloudsitAppDelegate.m in Sources */,
 				A311BB941942B83800471153 /* CloudsitViewController.m in Sources */,
+				A311BBB41942B94700471153 /* RequestManager.m in Sources */,
+				A311BBB91942B9BC00471153 /* CloudsitManager.m in Sources */,
+				A311BBC81942CB3600471153 /* NSObject+SBJSON.m in Sources */,
+				A311BBC91942CB3600471153 /* NSString+SBJSON.m in Sources */,
+				A311BBCA1942CB3600471153 /* SBJSON.m in Sources */,
+				A311BBCB1942CB3600471153 /* SBJsonBase.m in Sources */,
+				A311BBCC1942CB3600471153 /* SBJsonParser.m in Sources */,
+				A311BBCD1942CB3600471153 /* SBJsonWriter.m in Sources */,
+				A3AC8402194331A10096F52B /* CloudsitWeatherResult.m in Sources */,
+				A3AC8405194338290096F52B /* CloudsitCurrentConditionResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +540,7 @@
 				A311BBAE1942B83800471153 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A311BBAF1942B83800471153 /* Build configuration list for PBXNativeTarget "CloudsitTests" */ = {
 			isa = XCConfigurationList;
@@ -462,6 +549,7 @@
 				A311BBB11942B83800471153 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

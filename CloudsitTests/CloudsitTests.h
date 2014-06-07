@@ -7,7 +7,9 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "RequestManager.h"
 
 @interface CloudsitTests : SenTestCase
+<RequestManagerDelegate>
 
 @end

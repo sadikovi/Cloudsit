@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CloudsitManager.h"
 
 @interface CloudsitViewController : UIViewController
+<CloudsitManagerDelegate>
 
 @end
