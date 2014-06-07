@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A311BB781942B83800471153 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB771942B83800471153 /* UIKit.framework */; };
+		A311BB7A1942B83800471153 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB791942B83800471153 /* Foundation.framework */; };
+		A311BB7C1942B83800471153 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB7B1942B83800471153 /* CoreGraphics.framework */; };
+		A311BB821942B83800471153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A311BB801942B83800471153 /* InfoPlist.strings */; };
+		A311BB841942B83800471153 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BB831942B83800471153 /* main.m */; };
+		A311BB881942B83800471153 /* CloudsitAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BB871942B83800471153 /* CloudsitAppDelegate.m */; };
+		A311BB8A1942B83800471153 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A311BB891942B83800471153 /* Default.png */; };
+		A311BB8C1942B83800471153 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A311BB8B1942B83800471153 /* Default@2x.png */; };
+		A311BB8E1942B83800471153 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A311BB8D1942B83800471153 /* Default-568h@2x.png */; };
+		A311BB911942B83800471153 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A311BB8F1942B83800471153 /* MainStoryboard.storyboard */; };
+		A311BB941942B83800471153 /* CloudsitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BB931942B83800471153 /* CloudsitViewController.m */; };
+		A311BB9C1942B83800471153 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB9B1942B83800471153 /* SenTestingKit.framework */; };
+		A311BB9D1942B83800471153 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB771942B83800471153 /* UIKit.framework */; };
+		A311BB9E1942B83800471153 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A311BB791942B83800471153 /* Foundation.framework */; };
+		A311BBA61942B83800471153 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A311BBA41942B83800471153 /* InfoPlist.strings */; };
+		A311BBA91942B83800471153 /* CloudsitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBA81942B83800471153 /* CloudsitTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A311BB9F1942B83800471153 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A311BB6C1942B83800471153 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A311BB731942B83800471153;
+			remoteInfo = Cloudsit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A311BB741942B83800471153 /* Cloudsit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cloudsit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A311BB771942B83800471153 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A311BB791942B83800471153 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A311BB7B1942B83800471153 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A311BB7F1942B83800471153 /* Cloudsit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Cloudsit-Info.plist"; sourceTree = "<group>"; };
+		A311BB811942B83800471153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A311BB831942B83800471153 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A311BB851942B83800471153 /* Cloudsit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cloudsit-Prefix.pch"; sourceTree = "<group>"; };
+		A311BB861942B83800471153 /* CloudsitAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudsitAppDelegate.h; sourceTree = "<group>"; };
+		A311BB871942B83800471153 /* CloudsitAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudsitAppDelegate.m; sourceTree = "<group>"; };
+		A311BB891942B83800471153 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A311BB8B1942B83800471153 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A311BB8D1942B83800471153 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A311BB901942B83800471153 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		A311BB921942B83800471153 /* CloudsitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudsitViewController.h; sourceTree = "<group>"; };
+		A311BB931942B83800471153 /* CloudsitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudsitViewController.m; sourceTree = "<group>"; };
+		A311BB9A1942B83800471153 /* CloudsitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudsitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A311BB9B1942B83800471153 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		A311BBA31942B83800471153 /* CloudsitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CloudsitTests-Info.plist"; sourceTree = "<group>"; };
+		A311BBA51942B83800471153 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A311BBA71942B83800471153 /* CloudsitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudsitTests.h; sourceTree = "<group>"; };
+		A311BBA81942B83800471153 /* CloudsitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudsitTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A311BB711942B83800471153 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A311BB781942B83800471153 /* UIKit.framework in Frameworks */,
+				A311BB7A1942B83800471153 /* Foundation.framework in Frameworks */,
+				A311BB7C1942B83800471153 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A311BB961942B83800471153 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A311BB9C1942B83800471153 /* SenTestingKit.framework in Frameworks */,
+				A311BB9D1942B83800471153 /* UIKit.framework in Frameworks */,
+				A311BB9E1942B83800471153 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A311BB6B1942B83800471153 = {
+			isa = PBXGroup;
+			children = (
+				A311BB7D1942B83800471153 /* Cloudsit */,
+				A311BBA11942B83800471153 /* CloudsitTests */,
+				A311BB761942B83800471153 /* Frameworks */,
+				A311BB751942B83800471153 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A311BB751942B83800471153 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A311BB741942B83800471153 /* Cloudsit.app */,
+				A311BB9A1942B83800471153 /* CloudsitTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A311BB761942B83800471153 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A311BB771942B83800471153 /* UIKit.framework */,
+				A311BB791942B83800471153 /* Foundation.framework */,
+				A311BB7B1942B83800471153 /* CoreGraphics.framework */,
+				A311BB9B1942B83800471153 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A311BB7D1942B83800471153 /* Cloudsit */ = {
+			isa = PBXGroup;
+			children = (
+				A311BB861942B83800471153 /* CloudsitAppDelegate.h */,
+				A311BB871942B83800471153 /* CloudsitAppDelegate.m */,
+				A311BB8F1942B83800471153 /* MainStoryboard.storyboard */,
+				A311BB921942B83800471153 /* CloudsitViewController.h */,
+				A311BB931942B83800471153 /* CloudsitViewController.m */,
+				A311BB7E1942B83800471153 /* Supporting Files */,
+			);
+			path = Cloudsit;
+			sourceTree = "<group>";
+		};
+		A311BB7E1942B83800471153 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A311BB7F1942B83800471153 /* Cloudsit-Info.plist */,
+				A311BB801942B83800471153 /* InfoPlist.strings */,
+				A311BB831942B83800471153 /* main.m */,
+				A311BB851942B83800471153 /* Cloudsit-Prefix.pch */,
+				A311BB891942B83800471153 /* Default.png */,
+				A311BB8B1942B83800471153 /* Default@2x.png */,
+				A311BB8D1942B83800471153 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A311BBA11942B83800471153 /* CloudsitTests */ = {
+			isa = PBXGroup;
+			children = (
+				A311BBA71942B83800471153 /* CloudsitTests.h */,
+				A311BBA81942B83800471153 /* CloudsitTests.m */,
+				A311BBA21942B83800471153 /* Supporting Files */,
+			);
+			path = CloudsitTests;
+			sourceTree = "<group>";
+		};
+		A311BBA21942B83800471153 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A311BBA31942B83800471153 /* CloudsitTests-Info.plist */,
+				A311BBA41942B83800471153 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A311BB731942B83800471153 /* Cloudsit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A311BBAC1942B83800471153 /* Build configuration list for PBXNativeTarget "Cloudsit" */;
+			buildPhases = (
+				A311BB701942B83800471153 /* Sources */,
+				A311BB711942B83800471153 /* Frameworks */,
+				A311BB721942B83800471153 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Cloudsit;
+			productName = Cloudsit;
+			productReference = A311BB741942B83800471153 /* Cloudsit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A311BB991942B83800471153 /* CloudsitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A311BBAF1942B83800471153 /* Build configuration list for PBXNativeTarget "CloudsitTests" */;
+			buildPhases = (
+				A311BB951942B83800471153 /* Sources */,
+				A311BB961942B83800471153 /* Frameworks */,
+				A311BB971942B83800471153 /* Resources */,
+				A311BB981942B83800471153 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A311BBA01942B83800471153 /* PBXTargetDependency */,
+			);
+			name = CloudsitTests;
+			productName = CloudsitTests;
+			productReference = A311BB9A1942B83800471153 /* CloudsitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A311BB6C1942B83800471153 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Cloudsit;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Ivan Sadikov";
+			};
+			buildConfigurationList = A311BB6F1942B83800471153 /* Build configuration list for PBXProject "Cloudsit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A311BB6B1942B83800471153;
+			productRefGroup = A311BB751942B83800471153 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A311BB731942B83800471153 /* Cloudsit */,
+				A311BB991942B83800471153 /* CloudsitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A311BB721942B83800471153 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A311BB821942B83800471153 /* InfoPlist.strings in Resources */,
+				A311BB8A1942B83800471153 /* Default.png in Resources */,
+				A311BB8C1942B83800471153 /* Default@2x.png in Resources */,
+				A311BB8E1942B83800471153 /* Default-568h@2x.png in Resources */,
+				A311BB911942B83800471153 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A311BB971942B83800471153 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A311BBA61942B83800471153 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A311BB981942B83800471153 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A311BB701942B83800471153 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A311BB841942B83800471153 /* main.m in Sources */,
+				A311BB881942B83800471153 /* CloudsitAppDelegate.m in Sources */,
+				A311BB941942B83800471153 /* CloudsitViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A311BB951942B83800471153 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A311BBA91942B83800471153 /* CloudsitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A311BBA01942B83800471153 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A311BB731942B83800471153 /* Cloudsit */;
+			targetProxy = A311BB9F1942B83800471153 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A311BB801942B83800471153 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A311BB811942B83800471153 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A311BB8F1942B83800471153 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A311BB901942B83800471153 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		A311BBA41942B83800471153 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A311BBA51942B83800471153 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A311BBAA1942B83800471153 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A311BBAB1942B83800471153 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A311BBAD1942B83800471153 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Cloudsit/Cloudsit-Prefix.pch";
+				INFOPLIST_FILE = "Cloudsit/Cloudsit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A311BBAE1942B83800471153 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Cloudsit/Cloudsit-Prefix.pch";
+				INFOPLIST_FILE = "Cloudsit/Cloudsit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A311BBB01942B83800471153 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Cloudsit.app/Cloudsit";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Cloudsit/Cloudsit-Prefix.pch";
+				INFOPLIST_FILE = "CloudsitTests/CloudsitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		A311BBB11942B83800471153 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Cloudsit.app/Cloudsit";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Cloudsit/Cloudsit-Prefix.pch";
+				INFOPLIST_FILE = "CloudsitTests/CloudsitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A311BB6F1942B83800471153 /* Build configuration list for PBXProject "Cloudsit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A311BBAA1942B83800471153 /* Debug */,
+				A311BBAB1942B83800471153 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A311BBAC1942B83800471153 /* Build configuration list for PBXNativeTarget "Cloudsit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A311BBAD1942B83800471153 /* Debug */,
+				A311BBAE1942B83800471153 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A311BBAF1942B83800471153 /* Build configuration list for PBXNativeTarget "CloudsitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A311BBB01942B83800471153 /* Debug */,
+				A311BBB11942B83800471153 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A311BB6C1942B83800471153 /* Project object */;
+}
