@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "CloudsitManager.h"
 
 @interface CloudsitViewController : UIViewController
-<CloudsitManagerDelegate>
+<CloudsitManagerDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UITableViewDataSource, UITableViewDelegate>
 
 @end
