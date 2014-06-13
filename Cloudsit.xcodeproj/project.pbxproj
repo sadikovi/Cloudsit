@@ -31,8 +31,10 @@
 		A311BBCB1942CB3600471153 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC31942CB3600471153 /* SBJsonBase.m */; };
 		A311BBCC1942CB3600471153 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC51942CB3600471153 /* SBJsonParser.m */; };
 		A311BBCD1942CB3600471153 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A311BBC71942CB3600471153 /* SBJsonWriter.m */; };
-		A3AC8402194331A10096F52B /* CloudsitWeatherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A3AC8401194331A10096F52B /* CloudsitWeatherResult.m */; };
-		A3AC8405194338290096F52B /* CloudsitCurrentConditionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = A3AC8404194338290096F52B /* CloudsitCurrentConditionResult.m */; };
+		A3E2655519458CA8002F23BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E2655419458CA8002F23BD /* QuartzCore.framework */; };
+		A3E265581945A883002F23BD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E265571945A883002F23BD /* SettingsViewController.m */; };
+		A3F23540194AA0D200ECC7C6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A3F2353F194AA0D200ECC7C6 /* Settings.bundle */; };
+		A3F23543194AA3E200ECC7C6 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F23542194AA3E200ECC7C6 /* SettingsManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,10 +87,12 @@
 		A311BBC51942CB3600471153 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		A311BBC61942CB3600471153 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		A311BBC71942CB3600471153 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		A3AC8400194331A10096F52B /* CloudsitWeatherResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsitWeatherResult.h; sourceTree = "<group>"; };
-		A3AC8401194331A10096F52B /* CloudsitWeatherResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudsitWeatherResult.m; sourceTree = "<group>"; };
-		A3AC8403194338290096F52B /* CloudsitCurrentConditionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsitCurrentConditionResult.h; sourceTree = "<group>"; };
-		A3AC8404194338290096F52B /* CloudsitCurrentConditionResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudsitCurrentConditionResult.m; sourceTree = "<group>"; };
+		A3E2655419458CA8002F23BD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A3E265561945A883002F23BD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		A3E265571945A883002F23BD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		A3F2353F194AA0D200ECC7C6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A3F23541194AA3E200ECC7C6 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		A3F23542194AA3E200ECC7C6 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3E2655519458CA8002F23BD /* QuartzCore.framework in Frameworks */,
 				A311BB781942B83800471153 /* UIKit.framework in Frameworks */,
 				A311BB7A1942B83800471153 /* Foundation.framework in Frameworks */,
 				A311BB7C1942B83800471153 /* CoreGraphics.framework in Frameworks */,
@@ -118,6 +123,8 @@
 		A311BB6B1942B83800471153 = {
 			isa = PBXGroup;
 			children = (
+				A3F2353F194AA0D200ECC7C6 /* Settings.bundle */,
+				A3E2655419458CA8002F23BD /* QuartzCore.framework */,
 				A311BB7D1942B83800471153 /* Cloudsit */,
 				A311BBA11942B83800471153 /* CloudsitTests */,
 				A311BB761942B83800471153 /* Frameworks */,
@@ -199,10 +206,8 @@
 				A311BBB31942B94700471153 /* RequestManager.m */,
 				A311BBB71942B9BC00471153 /* CloudsitManager.h */,
 				A311BBB81942B9BC00471153 /* CloudsitManager.m */,
-				A3AC8403194338290096F52B /* CloudsitCurrentConditionResult.h */,
-				A3AC8404194338290096F52B /* CloudsitCurrentConditionResult.m */,
-				A3AC8400194331A10096F52B /* CloudsitWeatherResult.h */,
-				A3AC8401194331A10096F52B /* CloudsitWeatherResult.m */,
+				A3F23541194AA3E200ECC7C6 /* SettingsManager.h */,
+				A3F23542194AA3E200ECC7C6 /* SettingsManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -212,6 +217,8 @@
 			children = (
 				A311BB921942B83800471153 /* CloudsitViewController.h */,
 				A311BB931942B83800471153 /* CloudsitViewController.m */,
+				A3E265561945A883002F23BD /* SettingsViewController.h */,
+				A3E265571945A883002F23BD /* SettingsViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -313,6 +320,7 @@
 				A311BB8C1942B83800471153 /* Default@2x.png in Resources */,
 				A311BB8E1942B83800471153 /* Default-568h@2x.png in Resources */,
 				A311BB911942B83800471153 /* MainStoryboard.storyboard in Resources */,
+				A3F23540194AA0D200ECC7C6 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,8 +366,8 @@
 				A311BBCB1942CB3600471153 /* SBJsonBase.m in Sources */,
 				A311BBCC1942CB3600471153 /* SBJsonParser.m in Sources */,
 				A311BBCD1942CB3600471153 /* SBJsonWriter.m in Sources */,
-				A3AC8402194331A10096F52B /* CloudsitWeatherResult.m in Sources */,
-				A3AC8405194338290096F52B /* CloudsitCurrentConditionResult.m in Sources */,
+				A3E265581945A883002F23BD /* SettingsViewController.m in Sources */,
+				A3F23543194AA3E200ECC7C6 /* SettingsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
