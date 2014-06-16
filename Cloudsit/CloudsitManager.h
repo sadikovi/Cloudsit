@@ -8,8 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "RequestManager.h"
+#import "SettingsManager.h"
+#import "DateManager.h"
 
 @protocol CloudsitManagerDelegate;
+
+enum {
+    CloudsitManagerStateReady,
+    CloudsitManagerStateProceeding,
+    CloudsitManagerStateFinished
+} typedef CloudsitManagerState;
 
 @interface CloudsitManager : NSObject
 <RequestManagerDelegate>

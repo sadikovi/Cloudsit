@@ -11,10 +11,10 @@
 #define API_KEY                                 @"51f36cc5e948614af8195a03b0f299faca59146a"
 #define API_URL                                 @"http://api.worldweatheronline.com/free/v1"
 
-#define DefaultLocation                         @"Christchurch, New Zealand"
 
 @interface CloudsitManager()
 @property (nonatomic, strong) NSString *currentLocation;
+@property (nonatomic) CloudsitManagerState state;
 @end
 
 @implementation CloudsitManager
@@ -29,6 +29,8 @@
         if (loadManager) {
             self.requestManager = [[RequestManager alloc] init];
             self.requestManager.delegate = self;
+            
+            self.state = CloudsitManagerStateReady;
         }
     }
     
@@ -44,12 +46,13 @@
 }
 
 - (void)refreshDataForLocation:(NSString *)location {
-    if (!location) {
-        location = DefaultLocation;
-    }
     self.currentLocation = location;
     
-    if (self.requestManager) {
+    if (self.state == CloudsitManagerStateFinished) {
+        self.state = CloudsitManagerStateReady;
+    }
+    
+    if (self.requestManager && self.state == CloudsitManagerStateReady) {
         NSString *url = [self urlWithParameters:location andFormat:@"json" andNumberOfDays:5 andKey:API_KEY];
         
         [self.requestManager cancelRequest];
@@ -64,24 +67,49 @@
     [dict setValue:value forKey:[NSString stringWithFormat:@"%@", key]];
 }
 
-- (NSDictionary *)weatherWithDate:(NSString *)dateString andMaxTemperature:(NSString *)maxTemp andMinTemperature:(NSString *)minTemp
-andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+- (NSDictionary *)weatherWithDate:(NSString *)dateString
+                      andMaxTempC:(NSString *)maxTempC
+                      andMinTempC:(NSString *)minTempC
+                      andMaxTempF:(NSString *)maxTempF
+                      andMinTempF:(NSString *)minTempF
+                   andWeatherCode:(NSString *)weatherCode
+                   andWeatherDesc:(NSString *)weatherDesc {
+    NSDate *date = [[DateManager defaultManager] dateFromString:dateString usingMask:@"yyyy-MM-dd"];
+    NSString *weekday = [[DateManager defaultManager] shortWeekdayFromDate:date];
     
-    NSDateFormatter *weekFormatter = [[NSDateFormatter alloc] init];
-    [weekFormatter setDateFormat:@"EEE"];
-    
-    NSString *weekday = [weekFormatter stringFromDate:[dateFormatter dateFromString:dateString]];
-    
-    return @{@"date" : [dateFormatter dateFromString:dateString], @"maxTemp" : maxTemp, @"minTemp" : minTemp, @"weatherCode" : weatherCode, @"weekday" : weekday, @"weatherDesc" : weatherDesc };
+    return @{
+             @"date" : date,
+             @"maxTempC" : maxTempC,
+             @"minTempC" : minTempC,
+             @"maxTempF" : maxTempF,
+             @"minTempF" : minTempF,
+             @"weatherCode" : weatherCode,
+             @"weekday" : weekday,
+             @"weatherDesc" : weatherDesc
+            };
 }
 
-- (NSDictionary *)currentConditionWithDate:(NSString *)dateString andTemperature:(NSString *)temp andWeatherCode:(NSString *)weatherCode andMinTemp:(NSString *)minTemp andMaxTemp:(NSString *)maxTemp andWeatherDesc:(NSString *)weatherDesc {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm a"]; //2014-06-07 08:00 PM
-        
-    return @{ @"date" : [dateFormatter dateFromString:dateString], @"temp" : temp, @"weatherCode" : weatherCode , @"maxTemp" : maxTemp, @"minTemp" : minTemp, @"weatherDesc" : weatherDesc };
+- (NSDictionary *)currentConditionWithDate:(NSString *)dateString
+                                  andTempC:(NSString *)tempC
+                                  andTempF:(NSString *)tempF
+                            andWeatherCode:(NSString *)weatherCode
+                               andMinTempC:(NSString *)minTempC
+                               andMaxTempC:(NSString *)maxTempC
+                               andMinTempF:(NSString *)minTempF
+                               andMaxTempF:(NSString *)maxTempF
+                            andWeatherDesc:(NSString *)weatherDesc {
+    //2014-06-07 08:00 PM
+    return @{
+             @"date" : [[DateManager defaultManager] dateFromString:dateString usingMask:@"yyyy-MM-dd hh:mm a"],
+             @"tempC" : tempC,
+             @"tempF" : tempF,
+             @"weatherCode" : weatherCode ,
+             @"maxTempC" : maxTempC,
+             @"minTempC" : minTempC,
+             @"maxTempF" : maxTempF,
+             @"minTempF" : minTempF,
+             @"weatherDesc" : weatherDesc
+            };
 }
 
 - (NSDictionary *)processResult:(id)result withError: (NSError **)error {
@@ -98,6 +126,8 @@ andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
             } else {
                 NSMutableDictionary *resultData = [NSMutableDictionary dictionary];
                 [self setValue:self.currentLocation forKey:CloudsitManagerDataLocationKey inDictionary:resultData];
+                [self setValue:[[SettingsManager defaultManager].activeLocation objectForKey:LOCATIONS_NAME_KEY] forKey:LOCATIONS_NAME_KEY inDictionary:resultData];
+                [self setValue:[[SettingsManager defaultManager].activeLocation objectForKey:LOCATIONS_LOCATION_KEY] forKey:LOCATIONS_LOCATION_KEY inDictionary:resultData];
                 
                 NSMutableArray *resultWeather = [NSMutableArray array];
                 
@@ -106,9 +136,11 @@ andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
                 NSArray *weathers = (NSArray *)[data objectForKey:@"weather"];
                 for (id weather in weathers) {
                     [resultWeather addObject:[self weatherWithDate:[weather objectForKey:@"date"]
-                                               andMaxTemperature:[weather objectForKey:@"tempMaxC"]
-                                               andMinTemperature:[weather objectForKey:@"tempMinC"]
-                                                  andWeatherCode:[weather objectForKey:@"weatherCode"]
+                                                       andMaxTempC:[weather objectForKey:@"tempMaxC"]
+                                                       andMinTempC:[weather objectForKey:@"tempMinC"]
+                                                       andMaxTempF:[weather objectForKey:@"tempMaxF"]
+                                                       andMinTempF:[weather objectForKey:@"tempMinF"]
+                                                    andWeatherCode:[weather objectForKey:@"weatherCode"]
                                                     andWeatherDesc:[[[weather objectForKey:@"weatherDesc"] objectAtIndex:0] objectForKey:@"value"]
                     ]];
                 }
@@ -116,17 +148,23 @@ andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
                 [self setValue:resultWeather forKey:CloudsitManagerDataWeatherKey inDictionary:resultData];
                 
                 NSArray *currentCondition = (NSArray *)[data objectForKey:@"current_condition"];
-                NSString *currentTemperature = [[currentCondition objectAtIndex:0] objectForKey:@"temp_C"];
-                NSString *currentMinTemp = [[weathers objectAtIndex:0] objectForKey:@"tempMinC"];
-                NSString *currentMaxTemp = [[weathers objectAtIndex:0] objectForKey:@"tempMaxC"];
+                NSString *currentTemperatureC = [[currentCondition objectAtIndex:0] objectForKey:@"temp_C"];
+                NSString *currentTemperatureF = [[currentCondition objectAtIndex:0] objectForKey:@"temp_F"];
+                NSString *currentMinTempC = [[weathers objectAtIndex:0] objectForKey:@"tempMinC"];
+                NSString *currentMaxTempC = [[weathers objectAtIndex:0] objectForKey:@"tempMaxC"];
+                NSString *currentMinTempF = [[weathers objectAtIndex:0] objectForKey:@"tempMinF"];
+                NSString *currentMaxTempF = [[weathers objectAtIndex:0] objectForKey:@"tempMaxF"];
                 NSDictionary *currentWeatherCondition = [[[currentCondition objectAtIndex:0] objectForKey:@"weatherDesc"] objectAtIndex:0];
                 NSString *currentWeatherDesc = [currentWeatherCondition objectForKey:@"value"];
                 
                 [self setValue:[self currentConditionWithDate:[[currentCondition objectAtIndex:0] objectForKey:@"localObsDateTime"]
-                                               andTemperature:currentTemperature
+                                               andTempC:currentTemperatureC
+                                andTempF:currentTemperatureF
                                                andWeatherCode:[[currentCondition objectAtIndex:0] objectForKey:@"weatherCode"]
-                                                   andMinTemp:currentMinTemp
-                                                   andMaxTemp:currentMaxTemp
+                                                  andMinTempC:currentMinTempC
+                                                  andMaxTempC:currentMaxTempC
+                                                  andMinTempF:currentMinTempF
+                                                  andMaxTempF:currentMaxTempF
                                                andWeatherDesc:currentWeatherDesc]
                         forKey:CloudsitManagerDataCurrentConditionKey
                   inDictionary:resultData];
@@ -155,6 +193,7 @@ andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
 
 - (void)requestManager:(RequestManager *)manager startProceedingRequest:(NSURLRequest *)request {
     //NSLog(@"Request is starting");
+    self.state = CloudsitManagerStateProceeding;
 }
 
 - (void)requestManager:(RequestManager *)manager didReceiveResponse:(NSURLResponse *)response {
@@ -162,10 +201,10 @@ andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
 }
 
 - (void)requestManager:(RequestManager *)manager didLoadResult:(id)result {
+    self.state = CloudsitManagerStateFinished;
+    
     NSError *error;
     NSDictionary *resultData = [self processResult:result withError:&error];
-    //NSLog(@"Result: %@", result);
-    NSLog(@"Result data: %@", resultData);
     
     if (error) {
         [self.delegate manager:self didFailWithError:error];
@@ -175,6 +214,7 @@ andWeatherCode:(NSString *)weatherCode andWeatherDesc:(NSString *)weatherDesc {
 }
 
 - (void)requestManager:(RequestManager *)manager didFailWithError:(NSError *)error {
+    self.state = CloudsitManagerStateFinished;
     [self.delegate manager:self didFailWithError:error];
 }
 

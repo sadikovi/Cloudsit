@@ -30,6 +30,7 @@
     //STFail(@"Unit tests are not implemented yet in CloudsitTests");
     NSLog(@"Run tests");
     [self firstTest];
+    [self secondTest];
 }
 
 - (void)firstTest {
@@ -37,6 +38,20 @@
     RequestManager *manager = [[RequestManager alloc] initWithURLString:url andHTTPMethod:RequestManagerHTTPMethodGET];
     manager.delegate = self;
     [manager sendRequest];
+}
+
+- (void)secondTest {
+    //NSLog(@"Time zones: %@", [[NSTimeZone knownTimeZoneNames] description]);
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [formatter setDateFormat:@"yyyy-MM-dd h:mm:ss a"];
+    
+    NSString *format = @"2014-08-15 11:00:00 PM";
+    NSDate *date = [formatter dateFromString:format];
+    
+    NSLog(@"String: %@", format);
+    NSLog(@"Date: %@", date);
 }
 
 - (void)requestManager:(RequestManager *)manager startProceedingRequest:(NSURLRequest *)request {

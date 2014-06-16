@@ -12,65 +12,70 @@
 
 @property (nonatomic, strong) CloudsitManager *manager;
 @property (nonatomic, strong) NSDictionary *weatherData;
-@property (nonatomic, strong) NSString *currentLocation;
+@property (nonatomic, strong) NSDictionary *currentLocation;
 @property (nonatomic, strong) NSDate *lastUpdate;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UITableView *weatherTable;
+@property (nonatomic) BOOL animating;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *weekView;
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *countryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
-@property (weak, nonatomic) IBOutlet UILabel *weatherCodeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *weatherCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *minTempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *maxTempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *weatherDescLabel;
 @property (weak, nonatomic) IBOutlet UIView *infoView;
+@property (weak, nonatomic) IBOutlet UIView *buttonsView;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
+@property (weak, nonatomic) IBOutlet UIButton *updateButton;
+@property (weak, nonatomic) IBOutlet UIButton *slideButton;
 
 
 @end
 
 @implementation CloudsitViewController
 
-#define CloudsitUserDefaultsKey @"Cloudsit-sys-userdefaults-key-11021990"
-#define CloudsitUserDefaultsUpdateKey @"Cloudsit-sys-userdefaults-key-11021990_update"
-#define CloudsitUserDefaultsLocationKey @"Cloudsit-sys-userdefaults-key-11021990_location"
 #define UpdateIntervalLimit     10
 #define UpdateIntertval         10
 #define offset                  50
 #define WeatherTableCellHeight  80;
 
 
-
 - (void)loadFromUserDefaults {
-    NSDate *lUpdate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:CloudsitUserDefaultsUpdateKey];
-    if (lUpdate) {
-        self.lastUpdate = lUpdate;
-    }
-    
-    self.weatherData = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:CloudsitUserDefaultsKey];
-    [self invokeCurrentLocationFromUserDefaults];
+    self.lastUpdate = [SettingsManager defaultManager].lastUpdate;
+    self.weatherData = [SettingsManager defaultManager].weatherData;
+    [self invokeActiveLocationFromUserDefaults];
 }
 
-- (void)invokeCurrentLocationFromUserDefaults {
-    self.currentLocation = (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:CloudsitUserDefaultsLocationKey];
-}
-
-- (void)updateCurrentLocationAndUserDefaultsWithLocation:(NSString *)location {
-    self.currentLocation = location;
-    [[NSUserDefaults standardUserDefaults] setObject:location forKey:CloudsitUserDefaultsLocationKey];
+- (void)invokeActiveLocationFromUserDefaults {
+    self.currentLocation = [SettingsManager defaultManager].activeLocation;
 }
 
 - (void)updateUIWithResult:(NSDictionary *)result usingSet:(BOOL)withSet {
-    self.cityLabel.text = (NSString *)[result objectForKey:CloudsitManagerDataLocationKey];
+    self.cityLabel.text = (NSString *)[result objectForKey:LOCATIONS_NAME_KEY];
+    self.countryLabel.text = (NSString *)[result objectForKey:LOCATIONS_LOCATION_KEY];
     
-    NSString *temperature = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"temp"];
-    NSString *lowTemperature = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"minTemp"];
-    NSString *highTemperature = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"maxTemp"];
+    NSString *temperature = @"";
+    NSString *lowTemperature = @"";
+    NSString *highTemperature = @"";
+    
+    if ([SettingsManager defaultManager].isFahrenheit) {
+        temperature = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"tempF"];
+        lowTemperature = [(NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"minTempF"] stringByAppendingString:@"℉"];
+        highTemperature = [(NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"maxTempF"] stringByAppendingString:@"℉"];
+    } else {
+        temperature = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"tempC"];
+        lowTemperature = [(NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"minTempC"] stringByAppendingString:@"℃"];
+        highTemperature = [(NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"maxTempC"] stringByAppendingString:@"℃"];
+    }
     
     self.tempLabel.text = [NSString stringWithFormat:@"%@", temperature];
-    self.minTempLabel.text = [NSString stringWithFormat:@"%@℃", lowTemperature];
-    self.maxTempLabel.text = [NSString stringWithFormat:@"%@℃", highTemperature];
-    self.weatherCodeLabel.text = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"weatherCode"];
+    self.minTempLabel.text = [NSString stringWithFormat:@"L: %@", lowTemperature];
+    self.maxTempLabel.text = [NSString stringWithFormat:@"H: %@", highTemperature];
+    // should be some code for image view
+    //self.weatherCodeLabel.text = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"weatherCode"];
     self.weatherDescLabel.text = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"weatherDesc"];
     
     [self.weekView reloadData];
@@ -82,9 +87,50 @@
 }
 
 - (void)refreshWeather {
-    if (self.manager) {
-        [self.manager refreshDataForLocation:self.currentLocation];
+    [NoResultView removeNoResultViewFromSuperview:self.infoView];
+    if (!self.currentLocation) {
+        self.loadingView.hidden = NO;
+        self.weatherData = nil;
     }
+    
+    if (self.manager) {
+        [self.manager refreshDataForLocation:[self.currentLocation objectForKey:LOCATIONS_SEARCH_LOC_KEY]];
+        [self stopSpin];
+        [self startSpin];
+    }
+}
+
+- (void) spinWithOptions: (UIViewAnimationOptions) options {
+    // this spin completes 360 degrees every 2 seconds
+    [UIView animateWithDuration: 0.5f
+                          delay: 0.0f
+                        options: options
+                     animations: ^{
+                         self.updateButton.transform = CGAffineTransformRotate(self.updateButton.transform, M_PI / 2);
+                     }
+                     completion: ^(BOOL finished) {
+                         if (finished) {
+                             if (self.animating) {
+                                 // if flag still set, keep spinning with constant speed
+                                 [self spinWithOptions: UIViewAnimationOptionCurveLinear];
+                             } else if (options != UIViewAnimationOptionCurveEaseOut) {
+                                 // one last spin, with deceleration
+                                 [self spinWithOptions: UIViewAnimationOptionCurveEaseOut];
+                             }
+                         }
+                     }];
+}
+
+- (void)startSpin {
+    if (!self.animating) {
+        self.animating = YES;
+        [self spinWithOptions: UIViewAnimationOptionCurveEaseIn];
+    }
+}
+
+- (void) stopSpin {
+    // set the flag to stop spinning after one last 90 degree increment
+    self.animating = NO;
 }
 
 - (void)stopTimer {
@@ -120,39 +166,43 @@
     self.weatherTable = [[UITableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
     self.weatherTable.delegate = self;
     self.weatherTable.dataSource = self;
+    self.weatherTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     //self.weatherTable.scrollEnabled = NO;
+    
+    [self shadowToView:self.infoView];
+    [self.view insertSubview:self.weatherTable belowSubview:self.infoView];
     
     self.manager = [[CloudsitManager alloc] initWithRequestManager:YES];
     self.manager.delegate = self;
     self.weatherData = [NSDictionary dictionary];
     self.lastUpdate = [NSDate dateWithTimeIntervalSince1970:0];
-    
     [self loadFromUserDefaults];
     
-    [self shadowToView:self.infoView];
-    [self.view insertSubview:self.weatherTable belowSubview:self.infoView];
-    
     [self updateUIWithResult:self.weatherData usingSet:NO];
+    
+    self.slideButton.tag = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    // first of all update UI
+    [self updateUIWithResult:self.weatherData usingSet:YES];
+    
     NSDate *now = [NSDate date];
     NSTimeInterval interval = [now timeIntervalSinceDate:self.lastUpdate];
     
-    [self updateCurrentLocationAndUserDefaultsWithLocation:@"Christchurch, New Zealand"];
+    // if weather data is null we should insert spinner view
+    self.loadingView.hidden = (self.weatherData)?YES:NO;
     
     NSString *location = (NSString *)[self.weatherData objectForKey:CloudsitManagerDataLocationKey];
     // invoke current location from user defaults
-    [self invokeCurrentLocationFromUserDefaults];
+    [self invokeActiveLocationFromUserDefaults];
     
-    if (self.currentLocation && ![self.currentLocation isEqualToString:location]) {
+    if (self.currentLocation && ![[self.currentLocation objectForKey:LOCATIONS_SEARCH_LOC_KEY] isEqualToString:location]) {
         [self refreshWeather];
     } else {
-        [self updateCurrentLocationAndUserDefaultsWithLocation:location];
-        
-        if (interval > UpdateIntervalLimit) {
+        if (interval > UpdateIntervalLimit || !(interval >= 0)) {
             [self refreshWeather];
         } else {
             [self startTimer];
@@ -162,7 +212,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [self stopTimer];
 }
 
@@ -170,6 +219,16 @@
     [self stopTimer];
     [self refreshWeather];
 }
+
+- (IBAction)slide:(UIButton *)sender {
+    // it is an initial state, view is down
+    if (sender.tag == 0) {
+        [self animateView:self.infoView forState:NO withBouncing:NO];
+    } else {
+        [self animateView:self.infoView forState:YES withBouncing:NO];
+    }
+}
+
 
 - (IBAction)handlePan:(UIPanGestureRecognizer *)recognizer {
     BOOL isDown;
@@ -232,9 +291,14 @@
                                                                                view.frame = upFrame;
                                                                            }
                                                                        }];
+                                                      self.slideButton.tag = isDown?0:1;
                                                   }
                                               }];
                              
+                         }
+                         
+                         if (finished && !isBounce) {
+                             self.slideButton.tag = isDown?0:1;
                          }
                      }];
 
@@ -247,20 +311,32 @@
 }
 
 - (void)manager:(CloudsitManager *)manager didReceiveResult:(NSDictionary *)result {
+    // stop animation
+    [self stopSpin];
     self.weatherData = result;
-    [[NSUserDefaults standardUserDefaults] setObject:result forKey:CloudsitUserDefaultsKey];
+    [SettingsManager defaultManager].weatherData = self.weatherData;
     self.lastUpdate = [NSDate date];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:CloudsitUserDefaultsUpdateKey];
+    [SettingsManager defaultManager].lastUpdate = self.lastUpdate;
     
+    [NoResultView removeNoResultViewFromSuperview:self.infoView];
+    self.loadingView.hidden = YES;
     [self updateUIWithResult:self.weatherData usingSet:YES];
+    
     [self startTimer];
 }
 
 - (void)manager:(CloudsitManager *)manager didFailWithError:(NSError *)error {
     [self stopTimer];
+    // stop animation
+    [self stopSpin];
     
     BOOL isNotMsg = ![[error userInfo] objectForKey:@"msg"];
     NSString *message = isNotMsg?[error localizedDescription] : (NSString *)[[error userInfo] objectForKey:@"msg"];
+    
+    NoResultView *view = [[NoResultView alloc] initWithFrame:self.infoView.frame];
+    [self.infoView insertSubview:view belowSubview:self.buttonsView];
+    self.loadingView.hidden = YES;
+    [self updateUIWithResult:nil usingSet:YES];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:message
@@ -301,11 +377,20 @@
     UILabel *weekdayTemp = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, weekday_width, weekday_height)];
     weekdayTemp.backgroundColor = [UIColor clearColor];
     weekdayTemp.center = CGPointMake(cell.frame.size.width/2, (cell.frame.size.height-weekday_height/2));
-    NSString *tempMin = [currentDay objectForKey:@"minTemp"];
-    NSString *tempMax = [currentDay objectForKey:@"maxTemp"];
+    
+    NSString *tempMin = @"";
+    NSString *tempMax = @"";
+    if ([SettingsManager defaultManager].isFahrenheit) {
+        tempMin = [currentDay objectForKey:@"minTempF"];
+        tempMax = [currentDay objectForKey:@"maxTempF"];
+    } else {
+        tempMin = [currentDay objectForKey:@"minTempC"];
+        tempMax = [currentDay objectForKey:@"maxTempC"];
+    }
+    
     weekdayTemp.text = [NSString stringWithFormat:@"%@/%@", tempMin, tempMax];
     weekdayTemp.textAlignment = NSTextAlignmentCenter;
-    weekdayTemp.font = [UIFont fontWithName:@"Helvetica" size:12];
+    weekdayTemp.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
     [cell addSubview:weekdayTemp];
     
     return cell;
@@ -336,17 +421,27 @@
     
     NSDictionary *currentDay = [[self.weatherData objectForKey:CloudsitManagerDataWeatherKey] objectAtIndex:indexPath.row];
     
-    NSString *weekday = [currentDay objectForKey:@"weekday"];
-    NSString *tempMin = [currentDay objectForKey:@"minTemp"];
-    NSString *tempMax = [currentDay objectForKey:@"maxTemp"];
+    NSString *weekday = [[DateManager defaultManager] longWeekdayFromDate:(NSDate*)[currentDay objectForKey:@"date"]];
+    
+    NSString *tempMin = @"";
+    NSString *tempMax = @"";
+    if ([SettingsManager defaultManager].isFahrenheit) {
+        tempMin = [[currentDay objectForKey:@"minTempF"] stringByAppendingString:@"℉"];
+        tempMax = [[currentDay objectForKey:@"maxTempF"] stringByAppendingString:@"℉"];
+    } else {
+        tempMin = [[currentDay objectForKey:@"minTempC"] stringByAppendingString:@"℃"];
+        tempMax = [[currentDay objectForKey:@"maxTempC"] stringByAppendingString:@"℃"];
+    }
+    
     NSString *condition = [currentDay objectForKey:@"weatherDesc"];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"dd/MM"];
-    NSString *day = [dateFormatter stringFromDate:(NSDate *)[currentDay objectForKey:@"date"]];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ [%@]: %@", weekday, day, condition];
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"L: %@℃      H: %@℃", tempMin, tempMax];
+    NSString *day = [[DateManager defaultManager] stringFromDate:(NSDate *)[currentDay objectForKey:@"date"] usingMask:@"MMM dd"];
+    //cell.textLabel.text = [NSString stringWithFormat:@"%@ %@: %@", weekday, day, condition];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@: %@ / %@", weekday, day, tempMin, tempMax];
+    cell.textLabel.font = [[SettingsManager defaultManager] systemFont];
+    //cell.detailTextLabel.text = [NSString stringWithFormat:@"L: %@      H: %@", tempMin, tempMax];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", condition];
+    cell.detailTextLabel.font = [[SettingsManager defaultManager] systemFontDetail];
     cell.imageView.image = [UIImage imageNamed:@"Default"];
     
     return cell;

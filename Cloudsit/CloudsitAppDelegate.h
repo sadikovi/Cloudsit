@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingsManager.h"
 
 @interface CloudsitAppDelegate : UIResponder <UIApplicationDelegate>
 
