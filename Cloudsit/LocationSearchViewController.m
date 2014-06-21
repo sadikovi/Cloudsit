@@ -14,9 +14,6 @@
  *
  */
 @property (weak, nonatomic) IBOutlet UITableView *locationTable;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
-@property (weak, nonatomic) IBOutlet UINavigationBar *bar;
 
 // data array for managing properties
 @property (strong, nonatomic) NSMutableArray *data;
@@ -50,13 +47,15 @@
  * Method for changing bar button to enter and leave edit mode.
  *
  */
-- (void)button:(UIBarButtonItem *)sender didEnterEditMode:(BOOL)isEdited {
+- (void)button:(UIButton *)sender didEnterEditMode:(BOOL)isEdited {
     if (!isEdited) {
         sender.tag = EB_EDIT_TAG;
-        sender.title = EB_EDIT_TITLE;
+        [sender setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+        //sender.title = EB_EDIT_TITLE;
     } else {
         sender.tag = EB_DONE_TAG;
-        sender.title = EB_DONE_TITLE;
+        [sender setImage:[UIImage imageNamed:@"close-red"] forState:UIControlStateNormal];
+        //sender.title = EB_DONE_TITLE;
     }
 }
 
@@ -106,7 +105,29 @@
 }
 
 - (void)setupUIElements {
-    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
+    //self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Light" size:20],
+                                                                    UITextAttributeTextColor : [UIColor blackColor],
+                                                                    UITextAttributeTextShadowColor : [UIColor clearColor],
+                                                                    UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, 0)] };
+    // back button
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"back-highlighted"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(hideLocationSettings:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = back;
+    
+    // edit button
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [editButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [editButton setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+    [self button:editButton didEnterEditMode:NO];
+    [editButton addTarget:self action:@selector(toggleEditMode:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *edit = [[UIBarButtonItem alloc] initWithCustomView:editButton];
+    self.navigationItem.rightBarButtonItem = edit;
 }
 
 #pragma mark - View Lifecycle
@@ -123,7 +144,6 @@
     }
     
     // setup table and bar button to not usual (not edit) mode
-    [self button:self.editButton didEnterEditMode:NO];
     [self.locationTable setEditing:NO];
     [self.locationTable registerClass:[UITableViewCell class] forCellReuseIdentifier:EB_REUSE_IDENTIFIER];
     
@@ -143,11 +163,15 @@
 
 #pragma mark - IBActions
 
-- (IBAction)toggleEditMode:(UIBarButtonItem *)sender {
+- (IBAction)hideLocationSettings:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)toggleEditMode:(UIButton *)sender {
     if (sender.tag == EB_EDIT_TAG) {
         // turn on the edit mode
         [self button:sender didEnterEditMode:YES];
-        self.backButton.enabled = NO;
+        //self.backButton.enabled = NO;
         
         // set table into edit mode and
         [self.locationTable setEditing:YES animated:YES];
@@ -155,7 +179,7 @@
     } else if (sender.tag == EB_DONE_TAG) {
         // turn off edit mode
         [self button:sender didEnterEditMode:NO];
-        self.backButton.enabled = YES;
+        //self.backButton.enabled = YES;
         
         // set table back to usual mode and return searchbar
         [self.locationTable setEditing:NO animated:YES];
@@ -197,6 +221,9 @@
                 BSPlaceResult *place = (BSPlaceResult *)[self.searchPlaceResults objectAtIndex:indexPath.row];
                 cell.textLabel.text = place.name;
                 cell.detailTextLabel.text = place.location;
+                UIImageView *addView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow-up-left-gray"]];
+                cell.accessoryView = addView;
+                addView = nil;
             }
         }
     } else {
@@ -206,9 +233,11 @@
         cell.detailTextLabel.text = (NSString *)[[self.data objectAtIndex:indexPath.row] objectForKey:LOCATIONS_LOCATION_KEY];
         
         if ([SettingsManager isLocationActive:[self.data objectAtIndex:indexPath.row]]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.imageView.image = [UIImage imageNamed:@"radio-selected-green"];
         } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+            //cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.imageView.image = [UIImage imageNamed:@"radio-normal-green"];
         }
 
     }
@@ -264,10 +293,12 @@
         for (NSIndexPath *path in [tableView indexPathsForVisibleRows]) {
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:path];
             if ([path isEqual:indexPath]) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                cell.imageView.image = [UIImage imageNamed:@"radio-selected-green"];
                 [SettingsManager location:(NSMutableDictionary *)[self.data objectAtIndex:path.row] setActive:YES];
             } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                //cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.imageView.image = [UIImage imageNamed:@"radio-normal-green"];
                 [SettingsManager setLocationIsNotActive:(NSMutableDictionary *)[self.data objectAtIndex:path.row]];
             }
         }

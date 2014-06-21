@@ -14,6 +14,7 @@
 
 @implementation DateManager
 
+// singleton for DateManager
 + (DateManager *)defaultManager {
     static DateManager *sharedObject = nil;
     static dispatch_once_t onceToken;
@@ -25,6 +26,7 @@
     return sharedObject;
 }
 
+// init method for manager, date formatter is instanciated here
 - (id)init {
     self = [super init];
     if (self) {
@@ -36,6 +38,7 @@
     return self;
 }
 
+// set method for default formatter
 - (NSDateFormatter *)defaultFormatter {
     if (!_defaultFormatter) {
         _defaultFormatter = [[NSDateFormatter alloc] init];
@@ -72,11 +75,11 @@
 }
 
 - (BOOL)isDayTime:(NSDate *)date {
-    NSUInteger unitFlags = NSDayCalendarUnit | NSMonthCalendarUnit |NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:unitFlags fromDate:date];
+    [self.defaultFormatter setDateFormat:@"HH"];
+    NSString *hourString = [self.defaultFormatter stringFromDate:date];
+    NSInteger hour = [hourString intValue];
     
-    NSInteger hour = [components hour];
-    
+    // hour constansts, so day time is between 6 AM and 6 PM
     if (hour > 5 && hour < 18) {
         return YES;
     } else {

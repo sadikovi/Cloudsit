@@ -10,6 +10,7 @@
 
 @interface WeatherManager : NSObject
 
++ (WeatherManager *)defaultManager;
 - (UIImage *)imageForWeatherCode:(NSString *)code andDayTime:(BOOL)isDayTime;
 
 @end

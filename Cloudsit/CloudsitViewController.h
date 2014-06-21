@@ -11,6 +11,7 @@
 #import "CloudsitManager.h"
 #import "SettingsManager.h"
 #import "DateManager.h"
+#import "WeatherManager.h"
 #import "NoResultView.h"
 
 @interface CloudsitViewController : UIViewController

@@ -71,15 +71,30 @@
         highTemperature = [(NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"maxTempC"] stringByAppendingString:@"℃"];
     }
     
+    NSDate *currentDate = (NSDate *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"date"];
+    BOOL isDayTime = [[DateManager defaultManager] isDayTime:currentDate];
+    
     self.tempLabel.text = [NSString stringWithFormat:@"%@", temperature];
     self.minTempLabel.text = [NSString stringWithFormat:@"L: %@", lowTemperature];
     self.maxTempLabel.text = [NSString stringWithFormat:@"H: %@", highTemperature];
-    // should be some code for image view
-    //self.weatherCodeLabel.text = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"weatherCode"];
+    self.weatherCodeLabel.image = [[WeatherManager defaultManager] imageForWeatherCode:[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"weatherCode"] andDayTime:isDayTime];
     self.weatherDescLabel.text = (NSString *)[[result objectForKey:CloudsitManagerDataCurrentConditionKey] objectForKey:@"weatherDesc"];
     
-    [self.weekView reloadData];
-    [self.weatherTable reloadData];
+    if (!result) {
+        self.weekView.hidden = YES;
+        self.weatherTable.hidden = YES;
+        self.tempLabel.text = @"";
+        self.minTempLabel.text = @"";
+        self.maxTempLabel.text = @"";
+        
+    } else {
+        self.weekView.hidden = NO;
+        self.weatherTable.hidden = NO;
+        
+        [self.weekView reloadData];
+        [self.weatherTable reloadData];
+    }
+    
     
     if (withSet) {
         [self.view setNeedsDisplay];
@@ -179,8 +194,6 @@
     [self loadFromUserDefaults];
     
     [self updateUIWithResult:self.weatherData usingSet:NO];
-    
-    self.slideButton.tag = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -208,6 +221,9 @@
             [self startTimer];
         }
     }
+    
+    // set slide button
+    self.slideButton.tag = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -361,8 +377,9 @@
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"weekdayCell" forIndexPath:indexPath];
     // clean all cells from subviews, because of the reusability of these cells
-    for (UIView *subview in [cell subviews]) {
-        [subview removeFromSuperview];
+    for (id subview in [cell subviews]) {
+        if ([subview isKindOfClass:[UIView class]])
+            [subview removeFromSuperview];
     }
     
 #define weekday_height 30
@@ -392,6 +409,12 @@
     weekdayTemp.textAlignment = NSTextAlignmentCenter;
     weekdayTemp.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
     [cell addSubview:weekdayTemp];
+    
+    // image for cell
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+    imageView.image = [[WeatherManager defaultManager] imageForWeatherCode:[currentDay objectForKey:@"weatherCode"] andDayTime:YES];
+    imageView.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2);
+    [cell addSubview:imageView];
     
     return cell;
 }
@@ -425,24 +448,26 @@
     
     NSString *tempMin = @"";
     NSString *tempMax = @"";
+    // we use degree signs instead of Farehrenheit or Celsium
+    
     if ([SettingsManager defaultManager].isFahrenheit) {
-        tempMin = [[currentDay objectForKey:@"minTempF"] stringByAppendingString:@"℉"];
-        tempMax = [[currentDay objectForKey:@"maxTempF"] stringByAppendingString:@"℉"];
+        tempMin = [[currentDay objectForKey:@"minTempF"] stringByAppendingString:@"º"];
+        tempMax = [[currentDay objectForKey:@"maxTempF"] stringByAppendingString:@"º"];
     } else {
-        tempMin = [[currentDay objectForKey:@"minTempC"] stringByAppendingString:@"℃"];
-        tempMax = [[currentDay objectForKey:@"maxTempC"] stringByAppendingString:@"℃"];
+        tempMin = [[currentDay objectForKey:@"minTempC"] stringByAppendingString:@"º"];
+        tempMax = [[currentDay objectForKey:@"maxTempC"] stringByAppendingString:@"º"];
     }
     
     NSString *condition = [currentDay objectForKey:@"weatherDesc"];
     
     NSString *day = [[DateManager defaultManager] stringFromDate:(NSDate *)[currentDay objectForKey:@"date"] usingMask:@"MMM dd"];
     //cell.textLabel.text = [NSString stringWithFormat:@"%@ %@: %@", weekday, day, condition];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@: %@ / %@", weekday, day, tempMin, tempMax];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, %@: %@/%@", weekday, day, tempMin, tempMax];
     cell.textLabel.font = [[SettingsManager defaultManager] systemFont];
     //cell.detailTextLabel.text = [NSString stringWithFormat:@"L: %@      H: %@", tempMin, tempMax];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", condition];
     cell.detailTextLabel.font = [[SettingsManager defaultManager] systemFontDetail];
-    cell.imageView.image = [UIImage imageNamed:@"Default"];
+    cell.imageView.image = [[WeatherManager defaultManager] imageForWeatherCode:[currentDay objectForKey:@"weatherCode"] andDayTime:YES];
     
     return cell;
 }

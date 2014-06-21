@@ -121,4 +121,28 @@
     return [UIFont fontWithName:SETTINGS_FONT_SYSTEM_DET_NAME size:SETTINGS_FONT_SYSTEM_DET_SIZE];
 }
 
+#pragma mark - UIImage
+
+- (UIImage *)imageMask:(UIImage *)mask withColor:(UIColor *)color {
+    CGImageRef maskImage = mask.CGImage;
+    CGFloat width = mask.size.width;
+    CGFloat height = mask.size.height;
+    CGRect bounds = CGRectMake(0, 0, width, height);
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef bitmapContext = CGBitmapContextCreate(NULL, width, height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
+    CGContextClipToMask(bitmapContext, bounds, maskImage);
+    CGContextSetFillColorWithColor(bitmapContext, color.CGColor);
+    CGContextFillRect(bitmapContext, bounds);
+    
+    CGImageRef cImage = CGBitmapContextCreateImage(bitmapContext);
+    UIImage *coloredImage = [UIImage imageWithCGImage:cImage];
+    
+    CGContextRelease(bitmapContext);
+    CGColorSpaceRelease(colorSpace);
+    CGImageRelease(cImage);
+    
+    return coloredImage;
+}
+
 @end
